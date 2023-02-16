@@ -73,40 +73,46 @@ void deletefirst()
 {
 	if(first==NULL)
 	printf("Memory not allocated");
-	else if(first==last)
+	else 
 	{
-		printf("Deleted node is %d",first->data);
-		first=last=NULL;
+		if(first==last)
+		{
+			printf("Deleted node is %d",first->data);
+			first=last=NULL;
+		}
+		else
+		{
+			printf("Deleted node is %d",first->data);
+			first=first->next;
+		}
+		size-=1;
 	}
-	else
-	{
-		printf("Deleted node is %d",first->data);
-		first=first->next;
-	}
-	size-=1;
 }
 void deletelast()
 {
 	if(first==NULL)
 	printf("Memory not allocated");
-	else if(first==last)
+	else 
 	{
+		if(first==last)
+		{
 		printf("Deleted node is %d",first->data);
 		first=last=NULL;
-	}
-	else
-	{
-		ptr=first;
-		while(ptr->next!=NULL)
-		{
-			prev=ptr;
-			ptr=ptr->next;
 		}
-		printf("Deleted node is %d",ptr->data);
-		prev->next=NULL;
-		last=prev;
+		else
+		{
+			ptr=first;
+			while(ptr->next!=NULL)
+			{
+				prev=ptr;
+				ptr=ptr->next;
+			}
+			printf("Deleted node is %d",ptr->data);
+			prev->next=NULL;
+			last=prev;
+		}
+		size-=1;
 	}
-	size-=1;
 }
 void deleteposition()
 {
@@ -134,8 +140,6 @@ void deleteposition()
 			i++;
 		}
 		printf("Deleted node is %d",ptr->data);
-		//ptr=ptr->next;
-		//prev->next=ptr;
 		prev->next=ptr->next;
 		size-=1;
 	}
