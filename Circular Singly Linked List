@@ -1,0 +1,221 @@
+//CIRCULAR SINGULAR LINKED LIST
+#include<stdio.h>
+#include<stdlib.h>
+int choice,position,element,i,size=0;
+void insertfirst();
+void insertlast();
+void insertposition();
+void deletefirst();
+void deletelast();
+void deleteposition();
+void traverse();
+struct node
+{
+	int data;
+	struct node*next;
+}*first=NULL,*last=NULL,*newnode,*prev,*ptr;
+struct node*create()
+{
+	newnode=(struct node*)malloc(sizeof(struct node));
+	printf("data = ");
+	scanf("%d",&newnode->data);
+	newnode->next=NULL;
+	size+=1;
+	return newnode;
+}
+void insertfirst()
+{
+	newnode=create();
+	if(first==NULL)
+	{
+		first=last=newnode;
+		newnode->next=newnode;
+		first->next=first;
+	}
+	else
+	{
+		newnode->next=first;
+		last->next=newnode;
+		first=newnode;	
+	}
+	
+}
+void insertlast()
+{
+	newnode=create();
+	if(first==NULL)
+	{
+		first=last=newnode;
+		first->next=first;
+	}
+	else
+	{
+		last->next=newnode;
+		last=newnode;
+		newnode->next=first;
+	}
+}
+void insertposition()
+{
+	printf("Enter the position\t");
+	scanf("%d",&position);
+	if(position==1)
+	insertfirst();
+	else if(first==last&&position==2)
+	insertlast();
+	else
+	{
+		newnode=create();
+		if(first==NULL)
+		{
+			first=last=newnode;
+			first->next=first;
+		}
+		else
+		{
+			ptr=first;
+			for(i=1;i<position;i++)
+			{
+				prev=ptr;
+				ptr=ptr->next;
+			}
+			prev->next=newnode;
+			newnode->next=ptr;
+		}
+	}
+}
+void deletefirst()
+{
+	if(first==NULL)
+	printf("Memory not allocated");
+	else
+	{
+		if(first==last)
+		{
+			printf("Deleted node is %d",first->data);
+			first=last=NULL;
+		}
+		else
+		{
+			printf("Deleted node is %d",first->data);
+			first=first->next;
+			last->next=first;
+		}
+		size-=1;
+	}
+}
+void deletelast()
+{
+	if(first==NULL)
+	printf("Memory not allocated");
+	else 
+	{
+		if(first==last)
+		{
+			printf("Deleted node is %d",first->data);
+			first=last=NULL;
+		}
+		else
+		{
+			ptr=first;
+			do
+			{
+				prev=ptr;
+				ptr=ptr->next;
+			}while(ptr->next!=first);
+			printf("Deleted node is %d",ptr->data);
+			prev->next=first;
+			last=prev;
+		}
+		size-=1;
+	}
+}
+void deleteposition()
+{
+	printf("Enter the position\t");
+	scanf("%d",&position);
+	if(position==1)
+	deletefirst();
+	else if(position==size)
+	deletelast();
+	else if(first==NULL)
+	printf("Memory not allocated");
+	else
+	{
+		if(first==last)
+		{
+			printf("Deleted node is %d",first->data);
+			first=last=NULL;
+		}
+		else
+		{
+			i=1,ptr=first;
+			while(i<position)
+			{
+				prev=ptr;
+				ptr=ptr->next;
+				i++;
+			}
+			printf("Deleted node is %d",ptr->data);
+			prev->next=ptr->next;
+		}
+		size-=1;
+	}
+}
+void traverse()
+{
+	if(first==NULL)
+	printf("Memory not allocated");
+	else
+	{
+		printf("Size = %d\n",size);
+		ptr=first;
+		i=1;
+		do
+		{
+			printf("Node %d = %d\n",i,ptr->data);
+			ptr=ptr->next;
+			i++;
+		}while(ptr!=first);
+	}
+}
+void main()
+{
+	int choice;
+	printf("\n1.Insert First\n2.Insert Last\n3.Insert Position\n4.Delete First\n5.Delete Last\n6.Delete Position\
+\n7.Display\n8.Exit\n\n");
+	do
+	{
+		printf("Enter your choice\t");
+		scanf("%d",&choice);
+		switch(choice)
+		{
+			case 1:
+			insertfirst();
+			break;
+			case 2:
+			insertlast();
+			break;
+			case 3:
+			insertposition();
+			break;
+			case 4:
+			deletefirst();
+			break;
+			case 5:
+			deletelast();
+			break;
+			case 6:
+			deleteposition();
+			break;
+			case 7:
+			traverse();
+			break;
+			case 8:
+			exit(0);
+			default:
+			printf("Invalid choice\n");
+		}
+		printf("\n------------------------------------------------------------------------------------------\n");
+	}while(choice!=8);
+}
